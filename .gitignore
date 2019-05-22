@@ -1,0 +1,12 @@
+*.iml
+.DS_Store/
+.idea/
+out/
+node_modules/
+.vscode/
+*.jshintrc
+build/
+package-lock.json
+.env
+mongod.lock
+.vs/
