@@ -8,7 +8,7 @@ import cors from 'cors';
 
 const app = express();
 
-process.env.CONNECTION_STRING = "mongodb+srv://aleksmal:qwerty1234@cluster0-ezzur.mongodb.net/test?retryWrites=true"
+// process.env.CONNECTION_STRING = "mongodb+srv://aleksmal:qwerty1234@cluster0-ezzur.mongodb.net/test?retryWrites=true"
 
 mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true });
 
