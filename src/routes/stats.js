@@ -264,11 +264,11 @@ router
             const postId = getLastPosts[i].id;
             const offset = i * 1000;
 
-            await timer(180);
+            await timer(190);
             await getLastPostsLikes(postId, offset)
-            await timer(180);
+            await timer(190);
             await getLastPostsComments(postId)
-            await timer(180);
+            await timer(190);
           }
           return { attempts, allLikers, allComments }
         }
