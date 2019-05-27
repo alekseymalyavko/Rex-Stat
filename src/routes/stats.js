@@ -30,10 +30,24 @@ router
             access_token: TOKEN
           }
         })
+
+      const statistics = 
+        await HTTP.get('/stats.get', {
+          params: {
+            group_id: groupId,
+            app_id: APPID,
+            access_token: TOKEN_1,
+            extended: 1,
+            interval: 'day',
+            date_from: '2019-05-01',
+            date_to: '2019-05-25'
+          }
+        })
       
       groupObj.basicInfo = basicInfo.data.response[0];
       groupObj.basicInfoUsers = basicInfoUsers.data.response;
-
+      groupObj.statistics = statistics.data.response ? statistics.data.response.reverse() : 'Statistic unavaliable';
+      
       res.status(200).send(groupObj);
     } catch (err) {
       console.log(err)
