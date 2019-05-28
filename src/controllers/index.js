@@ -45,6 +45,7 @@ export function transformation(statistics, N) {
         let activity = [];
         let reach = [];
         let visitors = [];
+        let date = [];
 
         let data = statistics.reverse();  
             for (var i = 0; i < data.length; i++) {
@@ -52,9 +53,10 @@ export function transformation(statistics, N) {
                     activity.push(data[i].activity)
                     reach.push(data[i].reach)
                     visitors.push(data[i].visitors)
+                    date.push(data[i].period_from)
                 }
             }
-        const transformedStat = {activity, reach, visitors};
+        const transformedStat = {activity, reach, visitors, date};
         const calculatedData = calculation(activity, reach, visitors, N);
         const dataForMark = forMark(activity, reach, N);
 

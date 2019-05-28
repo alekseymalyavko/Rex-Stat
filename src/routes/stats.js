@@ -68,7 +68,7 @@ router
       
       if (isStatsOpen) {
         const transformData = transformation(statistics, N)
-        
+
         groupObj.statistics = transformData.transformedStat
         
         S = transformData.calculatedData.S;
