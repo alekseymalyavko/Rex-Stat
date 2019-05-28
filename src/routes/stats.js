@@ -100,7 +100,6 @@ router
         
         const getMarkI = async (pinnedPost) => {
           const postId = pinnedPost.id;
-          console.log(3333, pinnedPost)
           const attempts = Math.ceil(pinnedPost.likes.count / 1000);
 
           let markI = [];
@@ -123,8 +122,8 @@ router
 
             let likers = res.data.response.items;
             for (let i = 0; i < likers.length; i++) {
-              if (likers[i].id == undefined) {
-                return 0
+              if (likers[i].id === undefined) {
+                return
               } else {
                 markI.push(likers[i].id)
               }
@@ -145,18 +144,18 @@ router
         groupObj.calculatedData = calculatedData;
         
         groupObj.dataForMark = transformData.dataForMark;
-        if (pinnedPost.isAvailable) {
+        if (pinnedPost.isAvailable !== 0) {
           groupObj.dataForMark.markI = await getMarkI(pinnedPost);
         }
 
         const getMembers = async (groupId, N) => {
           const attempts = Math.ceil(N * 0.03 / 1000);
           let arrMembers = [];       
+          let bots = [];       
 
-          let count = 1000;
           let offset = 1;
 
-          const dataMembers = async () => {
+          const dataMembers = async (offset) => {
             const res = await HTTP.get('/groups.getMembers', {
               params: {
                 group_id: groupId,
@@ -167,21 +166,21 @@ router
                 access_token: TOKEN_1,
               }
             })
-            
             let users = res.data.response.items;
             for (let i = 0; i < users.length; i++) {
               if (users[i].deactivated === undefined) {
                 arrMembers.push(users[i].id)
+              } else if (users[i].deactivated !== undefined) {
+                bots.push(users[i].id)
               }
             }
           }
             
-          for (let i = 0; i < attempts; i++) {
+          for (let i = 0; i <= attempts; i++) {
             await dataMembers()
-            count = count + 1000;
-            offset = count / 1000;
+            offset += 1000;
           }
-          return {attempts, arrMembers}
+          return {attempts, arrMembers, bots}
         }
         groupObj.members = await getMembers(groupId, N)
 
@@ -228,8 +227,8 @@ router
             
             let likers = res.data.response.items;
             for (let i = 0; i < likers.length; i++) {
-              if (likers[i].id == undefined) {
-                return 0
+              if (likers[i].id === undefined) {
+                return
               } else {
                 allLikers.push(likers[i].id)
               }
@@ -251,8 +250,8 @@ router
 
             let comments = res.data.response.items;
             for (let i = 0; i < comments.length-1; i++) {
-              if (comments[i].id == undefined) {
-                return 0
+              if (comments[i].id === undefined) {
+                return
               }
               else {
                 allComments.push(comments[i].id)
