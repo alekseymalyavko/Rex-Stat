@@ -15,9 +15,8 @@ mongoose.connect(process.env.CONNECTION_STRING || urlDb, { useNewUrlParser: true
 app.use(cors());
 app.options('*', (req, res) => res.end());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 app.use('/', routes);
 
 app.get('/', function(req, res) {

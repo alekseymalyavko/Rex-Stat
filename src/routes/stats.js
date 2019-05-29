@@ -283,15 +283,15 @@ router
     }
   })
 
-  .get('/bots', async (req, res) => {
-    try {
-      // const data = await DataSchema.find();
-      res.status(200).send(data);
-    } catch (err) {
-      console.log(err)
-      res.status(500).send(err);
-    }
-  })
+  // .get('/bots', async (req, res) => {
+  //   try {
+  //     // const data = await DataSchema.find();
+  //     res.status(200).send(data);
+  //   } catch (err) {
+  //     console.log(err)
+  //     res.status(500).send(err);
+  //   }
+  // })
   .get('/', async (req, res) => {
     try {
       const data = await DataSchema.find();
@@ -301,11 +301,21 @@ router
       res.status(500).send(err);
     }
   })
+  .delete('/', async (req, res) => {
+    try {
+      const groupId = req.body.id;
+      const group = await DataSchema.remove({ _id: groupId });
+      res.status(200).send(data);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send(err);
+    }
+  })
   .post('/', async (req, res) => {
     try {
-      const { name } = req.body;
-      //тут запрос на вк апи
-      const data = await new DataSchema({ name }).save();
+      const groupInfo = req.body;
+      const data = await new DataSchema(groupInfo).save();
+
       res.status(200).send(data);
     } catch (err) {
       res.status(500).send(err);
