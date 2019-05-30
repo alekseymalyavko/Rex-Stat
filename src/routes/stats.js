@@ -17,6 +17,8 @@ router
       let isStatsOpen = true;
 
       const groupName = req.query.group;
+      const dateFrom = req.query.from;
+      const dateTo = req.query.to;
 
       const basicInfo = 
         await HTTP.get('/groups.getById', {
@@ -51,8 +53,8 @@ router
             access_token: TOKEN_1,
             extended: 1,
             interval: 'day',
-            date_from: '2019-05-01',
-            date_to: '2019-05-25'
+            date_from: dateFrom,
+            date_to: dateTo
           }
         })
         .then(res => {
