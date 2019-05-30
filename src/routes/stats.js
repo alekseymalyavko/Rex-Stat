@@ -305,9 +305,11 @@ router
   })
   .delete('/', async (req, res) => {
     try {
+      console.log(111, req.body)
       const groupId = req.body.id;
-      const group = await DataSchema.remove({ _id: groupId });
-      res.status(200).send(data);
+      const group = await DataSchema.deleteOne({ _id: groupId })
+
+      res.status(200).send(group);
     } catch (err) {
       console.log(err)
       res.status(500).send(err);
