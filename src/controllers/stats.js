@@ -114,12 +114,13 @@ export async function getMembers(groupId, N) {
     })
 
     let users = res.data.response.items;
-
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].deactivated === undefined) {
-        arrMembers.push(users[i].id)
-      } else if (users[i].deactivated !== undefined) {
-        bots.push(users[i].id)
+    if (users) { 
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].deactivated === undefined) {
+          arrMembers.push(users[i].id)
+        } else if (users[i].deactivated !== undefined) {
+          bots.push(users[i].id)
+        }
       }
     }
 
