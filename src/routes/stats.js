@@ -107,24 +107,45 @@ router
 
   .post('/excel', async (req, res) => {
     try {
-      const activity = req.body;
-      console.log(activity)
-      var json = [
-        {
-          attemps: 123,
-        },
-        {
-          allLikers: 3123,
-          allComments: 124,
-        },
-        {
-          allLikers: 3123,
-          allComments: 124,
-        },
-      ]
+      const data = req.body;
       
-      var xls = json2xls(json);
+      function transform(data) {
+        let isActivity = data.allComments;
         
+        let maxLength = 0
+        for (let key in data) {
+          console.log(333, key)
+          if (maxLength < data[key].length) {
+            maxLength = data[key].length
+          }
+        }
+        
+        let result = []
+        for(let i = 0; i < maxLength; i++) {
+          let obj = null;
+
+          if (isActivity) {
+            obj = {
+              comments: data.allComments[i] || '',
+              likes: data.allLikers[i] || '',
+            }
+          } else {
+            obj = {
+              markI: data.markI[i] || '',
+              markR: data.markR[i] || '',
+              markS: data.markS[i] || '',
+            }
+          }
+          
+          result.push(obj)
+        }
+
+        return result
+      }
+      
+      const dataToXls = transform(data)
+      var xls = json2xls(dataToXls);
+
       const path = 'data.xlsx'
       fs.writeFileSync(path, xls, 'binary');
       
