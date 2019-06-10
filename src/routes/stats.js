@@ -114,7 +114,6 @@ router
         
         let maxLength = 0
         for (let key in data) {
-          console.log(333, key)
           if (maxLength < data[key].length) {
             maxLength = data[key].length
           }
