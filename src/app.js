@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import routes from './routes';
 import cors from 'cors';
+import json2xls from 'json2xls';
 
 const app = express();
 
@@ -12,6 +13,7 @@ const urlDb = "mongodb+srv://aleksmal:qwerty1234@cluster0-ezzur.mongodb.net/test
 
 mongoose.connect(process.env.CONNECTION_STRING || urlDb, { useNewUrlParser: true });
 
+app.use(json2xls.middleware);
 app.use(cors());
 app.options('*', (req, res) => res.end());
 

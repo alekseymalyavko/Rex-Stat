@@ -3,6 +3,9 @@ import { transformation } from '../controllers/transform';
 import { getBasicInfo, getStatistics, getMarkI, getMembers, getAllActivity, getPinnedPost } from '../controllers/stats';
 import { DataSchema } from '../models/data';
 
+import json2xls from 'json2xls';
+import fs from 'fs';
+
 const router = express.Router();
 
 router
@@ -98,6 +101,36 @@ router
 
       res.status(200).send(data);
     } catch (err) {
+      res.status(500).send(err);
+    }
+  })
+
+  .post('/excel', async (req, res) => {
+    try {
+      const activity = req.body;
+      console.log(activity)
+      var json = [
+        {
+          attemps: 123,
+        },
+        {
+          allLikers: 3123,
+          allComments: 124,
+        },
+        {
+          allLikers: 3123,
+          allComments: 124,
+        },
+      ]
+      
+      var xls = json2xls(json);
+        
+      const path = 'data.xlsx'
+      fs.writeFileSync(path, xls, 'binary');
+      
+      res.download(path);
+    } catch (err) {
+      console.log(err)
       res.status(500).send(err);
     }
   })
