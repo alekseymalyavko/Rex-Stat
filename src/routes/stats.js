@@ -149,6 +149,13 @@ router
       fs.writeFileSync(path, xls, 'binary');
       
       res.download(path);
+
+      fs.stat(path, function (err, stats) {
+        if (err) {
+          return console.error(err);
+        }
+        fs.unlinkSync(path);  
+      });
     } catch (err) {
       console.log(err)
       res.status(500).send(err);
